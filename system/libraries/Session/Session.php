@@ -795,7 +795,8 @@ class CI_Session {
 
 			return;
 		}
-
+		// echo $data.'/'.$value;
+		// exit;
 		$_SESSION[$data] = $value;
 	}
 

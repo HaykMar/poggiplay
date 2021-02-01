@@ -111,14 +111,6 @@ use Model\User_model;
           </div>
         </div>
       </div>
-      If You need some help about core - read README.MD in system folder
-      <br>
-      What we have done All posts: <a href="./main_page/get_all_posts">/main_page/get_all_posts</a> One post: <a
-          href="./main_page/get_post/1">/main_page/get_post/1</a>
-      <br>
-      Just go coding Login: <a href="./main_page/login">/main_page/login</a> Make boosterpack feature <a
-          href="./main_page/buy_boosterpack">/main_page/buy_boosterpack</a> Add money feature <a
-          href="./main_page/add_money">/main_page/add_money</a>
     </div>
   </div>
 
@@ -223,7 +215,7 @@ use Model\User_model;
   <!-- Modal -->
   <div class="modal fade" id="invalidInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <form class="modal-content">
+      <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -236,9 +228,9 @@ use Model\User_model;
           </h2>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success" @click.prevent="buyPack">Check</button>
+          <button class="btn btn-success" data-dismiss="modal">close</button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
   
@@ -331,7 +323,7 @@ use Model\User_model;
             <div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Enter your password</label>
-                <input type="text" class="form-control" v-model="passVerifyInput" required>
+                <input type="password" class="form-control" v-model="passVerifyInput" required>
                 <div class="invalid-feedback" v-if="invalidVerifyPass.visible">
                   {{invalidVerifyPass.text}}
                 </div>

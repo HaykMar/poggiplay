@@ -71,7 +71,7 @@ class Main_page extends MY_Controller
         $post_id = intval($post_id);
 
         if (empty($post_id) || empty($message)){
-            return $this->response_error(CI_Core::RESPONSE_GENERIC_WRONG_PARAMS, ['error_text' => 'Post is not sent']);
+            return $this->response_error(CI_Core::RESPONSE_GENERIC_WRONG_PARAMS, ['error_text' => 'Data not sent correctly']);
         }
 
         try
@@ -82,7 +82,6 @@ class Main_page extends MY_Controller
         }
 
         // Todo: 2 nd task Comment
-        $post->comment();
         $data = array(
             'assign_id' => $post_id,
             'text' => $message,
@@ -122,7 +121,7 @@ class Main_page extends MY_Controller
         $user_model->set_id($user['id']);
         Login_model::start_session($user_model);
 
-        return $this->response_success(['user' => $user_model->get_id()]);
+        return $this->response_success();
     }
 
 
@@ -187,7 +186,7 @@ class Main_page extends MY_Controller
         $booster_data->set_bank($bank_total);
         $booster_data->create_new_history(['likes' => $amount]);
         // todo: 5th task add money to user logic
-        return $this->response_success(['amount' => $amount, 'total_likes' => $user->get_like_balance() + $amount, 'wallet_balance' => $wallet_balance - $booster_price]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
+        return $this->response_success(['amount' => $amount, 'total_likes' => $user->get_like_balance(), 'wallet_balance' => $user->get_wallet_balance()]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
     }
 
 
@@ -226,7 +225,7 @@ class Main_page extends MY_Controller
         $user->set_like_balance($like_balance - 1);
         $model_data->set_likes($likes + 1);
         // todo: 3rd task add like post\comment logic
-        return $this->response_success(['likes' => $likes + 1, 'total_likes' => $like_balance]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
+        return $this->response_success(['likes' => $likes + 1, 'total_likes' => $user->get_like_balance()]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
     }
 
     public function balance_history()
