@@ -58,7 +58,7 @@ if(isset($_SERVER['CI_DOMAIN']))
 {
     $domain = $_SERVER['CI_DOMAIN'];
 }
-define('DOMAIN', !empty($domain) ? $domain: 'example.com');
+define('DOMAIN', !empty($domain) ? $domain: 'localhost/poggiplay');
 
 /*
  *---------------------------------------------------------------
@@ -107,7 +107,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-$system_path = '../system';
+$system_path = './system';
 
 /*
  *---------------------------------------------------------------
@@ -122,7 +122,7 @@ $system_path = '../system';
  *
  * NO TRAILING SLASH!
  */
-$application_folder = '../application';
+$application_folder = './application';
 
 /*
  *---------------------------------------------------------------

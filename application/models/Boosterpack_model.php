@@ -12,6 +12,7 @@ use CI_Emerald_Model;
  */
 class Boosterpack_model extends CI_Emerald_Model {
     const CLASS_TABLE = 'boosterpack';
+    const CLASS_TABLE_HISTORY = 'boosterpack_history';
 
 
     /** @var float Цена бустерпака */
@@ -125,6 +126,14 @@ class Boosterpack_model extends CI_Emerald_Model {
         $this->is_loaded(TRUE);
         App::get_ci()->s->from(self::CLASS_TABLE)->where(['id' => $this->get_id()])->delete()->execute();
         return (App::get_ci()->s->get_affected_rows() > 0);
+    }
+
+    public function create_new_history($data)
+    {
+        $data['boosterpack_id'] = $this->get_id();
+        $data['bank'] = $this->get_bank();
+        $data['user_id'] = User_model::get_session_id();
+        App::get_ci()->s->from(self::CLASS_TABLE_HISTORY)->insert($data)->execute();
     }
 
 }

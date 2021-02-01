@@ -2,10 +2,9 @@
 
 namespace Model;
 use App;
-use CI_Model;
-use CriticalException;
+use CI_Emerald_Model;
 
-class Login_model extends CI_Model {
+class Login_model extends CI_Emerald_Model {
 
     public function __construct()
     {
@@ -15,7 +14,7 @@ class Login_model extends CI_Model {
 
     public static function logout()
     {
-        App::get_ci()->session->unset_userdata('id');
+        App::get_ci()->session->unset_userdata('poggiplay_id');
     }
 
     public static function start_session(User_model $user)
@@ -23,7 +22,7 @@ class Login_model extends CI_Model {
         // если перенедан пользователь
         $user->is_loaded(TRUE);
 
-        App::get_ci()->session->set_userdata('id', $user->get_id());
+        App::get_ci()->session->set_userdata('poggiplay_id', $user->get_id());
     }
 
 

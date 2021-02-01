@@ -1,5 +1,11 @@
 <?php
 
+namespace Model;
+
+use App;
+use CI_Emerald_Model;
+use Exception;
+use stdClass;
 /**
  * Created by PhpStorm.
  * User: mr.incognito
@@ -135,6 +141,15 @@ class Comment_model extends CI_Emerald_Model
     {
         return $this->likes;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function set_likes(int $likes)
+    {
+        $this->likes = $likes;
+        return $this->save('likes', $likes);
+    }
 
     /**
      * @return mixed
@@ -238,12 +253,12 @@ class Comment_model extends CI_Emerald_Model
 
             $o->user = User_model::preparation($d->get_user(),'main_page');
 
-            $o->likes = rand(0, 25);
+            $o->likes = $d->get_likes();
 
             $o->time_created = $d->get_time_created();
             $o->time_updated = $d->get_time_updated();
 
-            $ret[] = $o;
+            $ret[$o->id] = $o;
         }
 
 

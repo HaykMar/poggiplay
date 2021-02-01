@@ -15,6 +15,7 @@ use stdClass;
  */
 class User_model extends CI_Emerald_Model {
     const CLASS_TABLE = 'user';
+    const CLASS_TABLE_HISTORY = 'user_history';
 
 
     /** @var string */
@@ -36,6 +37,8 @@ class User_model extends CI_Emerald_Model {
     /** @var float */
     protected $wallet_total_withdrawn;
     /** @var string */
+    protected $like_balance;
+    /** @var int */
     protected $time_created;
     /** @var string */
     protected $time_updated;
@@ -196,6 +199,25 @@ class User_model extends CI_Emerald_Model {
     }
 
     /**
+     * @return int
+     */
+    public function get_like_balance(): int
+    {
+        return $this->like_balance;
+    }
+
+    /**
+     * @param int $like_balance
+     *
+     * @return bool
+     */
+    public function set_like_balance(int $like_balance)
+    {
+        $this->like_balance = $like_balance;
+        return $this->save('like_balance', $like_balance);
+    }
+
+    /**
      * @return string
      */
     public function get_time_created(): string
@@ -238,6 +260,12 @@ class User_model extends CI_Emerald_Model {
     {
         parent::__construct();
         $this->set_id($id);
+    }
+
+    function get_user_data($user)
+    {
+        $this->data = App::get_ci()->s->from(self::CLASS_TABLE)->where(['email' => $user['login'], 'password' => $user['password']])->one();
+        return $this->data;
     }
 
     public function reload(bool $for_update = FALSE)
@@ -283,7 +311,7 @@ class User_model extends CI_Emerald_Model {
      */
     public static function get_session_id(): ?int
     {
-        return App::get_ci()->session->userdata('id');
+        return App::get_ci()->session->userdata('poggiplay_id');
     }
 
     /**
@@ -380,6 +408,19 @@ class User_model extends CI_Emerald_Model {
         }
 
         return $o;
+    }
+
+    public function create_new_history($data)
+    {
+        $data['user_id'] = $this->get_id();
+        $data['wallet_balance'] = $this->get_wallet_balance();
+        $data['like_balance'] = $this->get_like_balance();
+        App::get_ci()->s->from(self::CLASS_TABLE_HISTORY)->insert($data)->execute();
+    }
+
+    public function get_history($order)
+    {
+        return App::get_ci()->s->from(self::CLASS_TABLE_HISTORY)->where(['user_id' => User_model::get_session_id()])->sortDesc($order)->many();
     }
 
 }
